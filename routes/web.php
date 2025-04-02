@@ -1,20 +1,53 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\ProductoController;
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth','verified'])->group(function(){
+    Route::get('/dashboard',function(){
+        $user = Auth::user();
+        if($user->role==='gerente'){
+            return redirect()->route('dashboard.gerente');
+        } else if ($user->role==='empleado'){
+            return redirect()->route('dashboard.empleado');
+        } else{
+            return redirect()->route('dashboard.cliente');
+        }
 
-Route::middleware('auth')->group(function () {
+    })->name('dashboard');
+
+    Route::get('/dashboard/gerente', function () {
+        return view('dashboard.gerente');
+    })->middleware(['auth', 'verified'])->name('dashboard.gerente');
+
+    Route::get('/dashboard/empleado', function () {
+        return view('dashboard.empleado');
+    })->middleware(['auth', 'verified'])->name('dashboard.empleado');
+
+    Route::get('/dashboard/cliente', function () {
+        return view('dashboard.cliente');
+    })->middleware(['auth', 'verified'])->name('dashboard.cliente');
+  
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::middleware(['auth'])->group(function(){
+        Route::resource('empleados',EmpleadoController::class);
+        Route::resource('clientes',ClienteController::class);
+        Route::resource('productos',ProductoController::class);
+    });
 });
+
+
 
 require __DIR__.'/auth.php';
