@@ -41,13 +41,15 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::middleware(['auth'])->group(function(){
-        Route::resource('empleados',EmpleadoController::class);
-        Route::resource('clientes',ClienteController::class);
-        Route::resource('productos',ProductoController::class);
+    Route::middleware(['auth'])->group(function () {
+        Route::resource('empleados', EmpleadoController::class);
     });
+    Route::resource('clientes', ClienteController::class);
+    Route::resource('productos', ProductoController::class);
+    Route::resource('carritos', CarritoController::class);
+    Route::resource('ventas', VentaController::class);
+    Route::resource('categorias', CategoriaController::class);
 });
-
 
 
 require __DIR__.'/auth.php';
