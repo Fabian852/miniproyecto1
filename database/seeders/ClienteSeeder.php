@@ -11,11 +11,11 @@ class ClienteSeeder extends Seeder
     public function run(): void
     {
         $clientes = [
-            ['name' => 'Juan Pérez',    'email' => 'juan@example.com',   'password' => 'juan123'],
-            ['name' => 'Ana García',    'email' => 'ana@example.com',    'password' => 'ana123'],
-            ['name' => 'Luis Romero',   'email' => 'luis@example.com',   'password' => 'luis123'],
-            ['name' => 'Marta Sánchez', 'email' => 'marta@example.com',  'password' => 'marta123'],
-            ['name' => 'Carlos Ruiz',   'email' => 'carlos@example.com', 'password' => 'carlos123'],
+            ['name' => 'Valeria Mendoza',   'email' => 'valeria@example.com', 'password' => 'valeria123'],
+            ['name' => 'Diego Torres',      'email' => 'diego@example.com',   'password' => 'diego123'],
+            ['name' => 'Sofía Castillo',    'email' => 'sofia@example.com',   'password' => 'sofia123'],
+            ['name' => 'Emilio Fernández',  'email' => 'emilio@example.com',  'password' => 'emilio123'],
+            ['name' => 'Camila Navarro',    'email' => 'camila@example.com',  'password' => 'camila123'],
         ];
 
         foreach ($clientes as $cliente) {
