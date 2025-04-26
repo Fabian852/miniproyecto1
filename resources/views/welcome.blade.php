@@ -81,7 +81,7 @@
             </section>
             
             <section>
-                <h2>Ubicación</h2>
+                <h2>Ubicación o lugar</h2>
                 <p>Nos encontramos en el corazón de la ciudad, brindando soluciones accesibles para todos.</p>
             </section>
 
