@@ -55,7 +55,7 @@
                 </div>
             @endif
         @else 
-            <h2 class="text-xl font-semibold mb-4">No puedes estar aquí.</h2>
+            <h2 class="text-xl font-semibold mb-4">No deberias de estar aquí.</h2>
         @endif
     </div>
 </x-app-layout>

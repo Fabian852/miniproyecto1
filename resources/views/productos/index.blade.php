@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="container mt-5">
+
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="text-primary">Lista de Productos</h2>
             @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
@@ -8,6 +9,7 @@
                 </a>
             @endif
         </div>
+        
 
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -30,6 +32,9 @@
                             <th>Descripción</th>
                             <th>Precio</th>
                             <th>Stock</th>
+                            @if(auth()->user()->role === 'cliente')
+                            <th class="text-center">Agregar al carrito</th>
+                            @endif
                             @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
                             <th class="text-center">Acciones</th>
                             @endif
@@ -56,6 +61,18 @@
                                         </button>
                                     </form>
                                 </td>
+                                @endif
+                                @if(auth()->user()->role === 'cliente')
+                                    <td class="text-center">
+                                        <form method="POST" action="{{ route('carritos.store') }}" class="d-flex justify-content-center align-items-center">
+                                            @csrf
+                                            <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                                            <input type="number" name="cantidad" value="1" min="1" class="form-control w-25 me-2" />
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-cart-plus"></i> Agregar
+                                            </button>
+                                        </form>
+                                    </td>
                                 @endif
                             </tr>
                         @endforeach

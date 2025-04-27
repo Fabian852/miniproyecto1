@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +45,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function productos()
+    {
+        return $this->hasManyThrough(Producto::class, Carrito::class, 'user_id', 'id', 'id', 'producto_id');
     }
 }
