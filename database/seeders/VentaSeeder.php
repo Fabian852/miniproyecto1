@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 use App\Models\Venta;
+use App\Models\Producto;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
