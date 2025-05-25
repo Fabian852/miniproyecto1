@@ -12,7 +12,7 @@ class ProductoSeeder extends Seeder
     {
         $productos = [
             ['nombre' => 'Cuaderno Profesional Raya', 'descripcion' => 'Cuaderno de 100 hojas tamaño carta', 'precio' => 45.00, 'stock' => 50,'user_id' => 1, 'imagenes' => ['/productos/p1.jpg']],
-            ['nombre' => 'Lápiz HB #2', 'descripcion' => 'Lápiz de grafito con goma', 'precio' => 5.00, 'stock' => 200,'user_id' => 2, 'imagenes' => ['/productos/p2.jpg']],
+            ['nombre' => 'Lápiz HB #2', 'descripcion' => 'Lápiz de grafito con goma', 'precio' => 5.00, 'stock' => 200,'user_id' => 2, 'imagenes' => ['']],
             /*['nombre' => 'Bolígrafo Azul BIC', 'descripcion' => 'Bolígrafo de tinta azul punto medio', 'precio' => 7.50, 'stock' => 150],
             ['nombre' => 'Marcadores Permanentes Sharpie', 'descripcion' => 'Set de 4 colores surtidos', 'precio' => 65.00, 'stock' => 30],
             ['nombre' => 'Carpeta Plástica Tamaño Carta', 'descripcion' => 'Carpeta con broche de presión', 'precio' => 12.00, 'stock' => 80],

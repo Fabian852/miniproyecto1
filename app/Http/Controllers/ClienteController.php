@@ -36,7 +36,7 @@ class ClienteController extends Controller
 {
     $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:clientes,email',
+        'email' => 'required|email|unique:users,email',
         'password' => 'required|string|min:6',
     ]);
 
@@ -92,6 +92,15 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cliente = User::findOrFail($id);
+
+        // Opcional: Verifica que sea un cliente
+        if ($cliente->role !== 'cliente') {
+            return redirect()->route('clientes.index')->with('error', 'Solo se pueden eliminar clientes.');
+        }
+
+        $cliente->delete();
+
+        return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente');
     }
 }
