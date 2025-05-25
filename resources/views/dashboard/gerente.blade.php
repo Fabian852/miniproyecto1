@@ -2,7 +2,7 @@
 
     @if(auth()->user()->role === 'gerente')
         <h2 class="text-xl font-semibold mb-4">Panel de Gerente</h2>
-        <p class="mb-4">Bienvenido, gerente.</p>
+        <p class="mb-4">Bienvenido, {{ Auth::user()->name }}.</p>
         <div class="mb-4">
             <a href="{{ route('empleados.index') }}" class="btn btn-primary">Gestión de Empleados</a>
         </div>
@@ -17,6 +17,9 @@
 
         <div class="mb-4">
             <a href="{{ route('categorias.index') }}" class="btn btn-primary">Gestión de categorias</a>
+        </div>
+        <div class="mb-4">
+            <a href="{{ route('administrador.index') }}" class="btn btn-warning">Panel Administrativo</a>
         </div>
     @else
         <h2 class="text-xl font-semibold mb-4">No deberias de estar aquí.</h2>

@@ -22,10 +22,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect()->route('dashboard.gerente');
         } elseif ($user->role === 'empleado') {
             return redirect()->route('dashboard.empleado');
-        } else {
-            return redirect()->route('dashboard.cliente');
+        } elseif ($user->role === 'cliente') {
+            if ($user->subrol === 'vendedor') {
+                return redirect()->route('dashboard.vendedor');
+            } elseif ($user->subrol === 'comprador') {
+                return redirect()->route('dashboard.comprador');
+            } else {
+                return redirect()->route('dashboard.cliente'); // <-- Nueva ruta para cliente genérico
+            }
         }
-    })->name('dashboard');
+    abort(403);
+})->name('dashboard');
 
     Route::get('/dashboard/gerente', function () {
         return view('dashboard.gerente');
@@ -38,6 +45,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/cliente', function () {
         return view('dashboard.cliente');
     })->name('dashboard.cliente');
+
+    Route::get('/dashboard/vendedor', function () {
+        return view('dashboard.vendedor');
+    })->name('dashboard.vendedor');
+
+    Route::get('/dashboard/comprador', function () {
+        return view('dashboard.comprador');
+    })->name('dashboard.comprador');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -60,8 +75,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/carrito/comprar', [App\Http\Controllers\CarritoController::class, 'comprar'])->name('carrito.comprar');
     Route::get('/carritos/comprar', [CarritoController::class, 'comprar'])->name('carritos.comprar');
     Route::middleware(['auth'])->group(function () {
-    Route::get('/administador/dashboard', [AdminDashboardController::class, 'index'])
-        ->name('administador.dashboard');
+    Route::get('/administrador/index', [AdminDashboardController::class, 'index'])
+    ->name('administrador.index');
     });
 });
 

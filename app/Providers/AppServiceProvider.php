@@ -5,8 +5,10 @@ use App\Models\Categoria;
 use App\Policies\CategoriaPolicy;
 use App\Models\Carrito;
 use App\Models\Venta;
+use App\Models\User;
 use App\Policies\VentaPolicy;
 use App\Policies\CarritoPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

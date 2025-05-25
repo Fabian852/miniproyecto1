@@ -15,4 +15,10 @@ class UserPolicy
     {
         return $user->role === 'gerente';
     }
+
+    // En UserPolicy o una Gate
+    public function verDashboardAdmin(User $user)
+    {
+        return $user->role === 'gerente';
+    }
 }

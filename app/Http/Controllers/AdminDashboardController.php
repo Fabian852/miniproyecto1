@@ -46,7 +46,7 @@ class AdminDashboardController extends Controller
                 ];
             }
         }
-        return view('admin.dashboard', compact(
+        return view('administrador.index', compact(
             'totalUsuarios',
             'vendedores',
             'compradores',

@@ -38,6 +38,7 @@ class ClienteController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|string|min:6',
+        'subrol' => 'required|in:comprador,vendedor',
     ]);
 
     // Guardar el cliente con contraseña encriptada
@@ -45,9 +46,11 @@ class ClienteController extends Controller
         'name' => $validated['name'],
         'email' => $validated['email'],
         'password' => bcrypt($validated['password']),
+        'role' => 'cliente',
+        'subrol' => $request->subrol,
     ]);
 
-    return redirect()->route('clientes.index')->with('success', 'Cliente registrado correctamente');
+    return redirect()->route('clientes.index')->with('success', 'Cliente creado correctamente');
 }
 
     /**
