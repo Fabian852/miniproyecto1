@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'subrol',
     ];
 
     /**
@@ -47,8 +48,21 @@ class User extends Authenticatable
         ];
     }
 
+    // Relación de uno a muchos con Carrito, osea un usuario tiene muchos carritos
+    public function carritos()
+    {
+        return $this->hasMany(Carrito::class);
+    }
+
+    // Relación de uno a muchos con Venta, osea un usuario tiene muchas ventas
+    public function ventas()
+    {
+        return $this->hasMany(Venta::class);
+    }
+
     public function productos()
     {
-        return $this->hasManyThrough(Producto::class, Carrito::class, 'user_id', 'id', 'id', 'producto_id');
+        return $this->hasManyThrough(Producto::class, Carrito::class, 
+        'user_id', 'id', 'id', 'producto_id');
     }
 }

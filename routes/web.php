@@ -6,6 +6,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,6 +43,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('ventas/{venta}/ticket', [VentaController::class, 'showTicket'])
+    ->name('ventas.ticket')
+    ->middleware('auth');
+
     Route::middleware(['auth'])->group(function () {
         Route::resource('empleados', EmpleadoController::class);
     });
@@ -50,7 +55,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('carritos', CarritoController::class);
     Route::resource('ventas', VentaController::class);
     Route::resource('categorias', CategoriaController::class);
+    Route::post('/ventas/{venta}/validar', [VentaController::class, 'validar'])->name('ventas.validar');
+    Route::get('ventas/{venta}/ticket', [VentaController::class, 'showTicket'])->name('ventas.ticket');
     Route::post('/carrito/comprar', [App\Http\Controllers\CarritoController::class, 'comprar'])->name('carrito.comprar');
+    Route::get('/carritos/comprar', [CarritoController::class, 'comprar'])->name('carritos.comprar');
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/administador/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('administador.dashboard');
+    });
 });
 
 require __DIR__.'/auth.php';

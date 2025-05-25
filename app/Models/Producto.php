@@ -8,11 +8,12 @@ class Producto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'descripcion', 'precio', 'stock'];
+    protected $fillable = ['nombre', 'descripcion', 'precio', 'stock','user_id','imagenes'];
+    protected $casts = ['imagenes' => 'array',];
 
-    public function carritos()
+    public function vendedor()
     {
-    return $this->belongsToMany(Carrito::class, 'carrito_producto')->withTimestamps();
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function ventas()
@@ -25,10 +26,4 @@ class Producto extends Model
     {
     return $this->belongsToMany(Categoria::class, 'categoria_producto', 'producto_id', 'categoria_id');
     }
-
-    public function venta()
-    {
-        return $this->belongsTo(Venta::class);
-    }
-
 }

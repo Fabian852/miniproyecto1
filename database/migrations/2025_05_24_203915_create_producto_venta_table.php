@@ -11,24 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('productos', function (Blueprint $table) {
+        Schema::create('producto_venta', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
-            $table->decimal('precio', 10, 2);
-            $table->integer('stock');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->json('imagenes')->nullable();
+            $table->foreignId('producto_id')->constrained()->onDelete('cascade');
+            $table->foreignId('venta_id')->constrained()->onDelete('cascade');
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('productos');
+        Schema::dropIfExists('producto_venta');
     }
 };

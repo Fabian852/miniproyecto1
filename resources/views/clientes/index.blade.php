@@ -27,6 +27,7 @@
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Email</th>
+                                <th>Subrol</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -36,6 +37,7 @@
                                     <td>{{ $cliente->id }}</td>
                                     <td>{{ $cliente->name }}</td>
                                     <td>{{ $cliente->email }}</td>
+                                    <td>{{ ucfirst($cliente->subrol) }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i> Editar

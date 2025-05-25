@@ -15,20 +15,23 @@ class CategoriaSeeder extends Seeder
      */
     public function run()
     {
+        /*
         // Crea categorías de ejemplo
         Categoria::create([
-            'nombre' => 'Tecnología',
-            'descripcion' => 'Productos tecnológicos de última generación',
+            'nombre' => 'Útiles Escolares',
+            'descripcion' => 'Material básico para el uso escolar',
         ]);
 
         Categoria::create([
-            'nombre' => 'Gaming',
-            'descripcion' => 'Todo lo relacionado con videojuegos y accesorios',
+            'nombre' => 'Material de Oficina',
+            'descripcion' => 'Artículos usados comúnmente en oficinas',
         ]);
 
         Categoria::create([
-            'nombre' => 'Electrodomésticos',
-            'descripcion' => 'Electrodomésticos y artículos para el hogar',
+            'nombre' => 'Arte y Dibujo',
+            'descripcion' => 'Materiales para actividades artísticas y creativas',
         ]);
+        */
+        Categoria::factory()->count(10)->create();
     }
 }

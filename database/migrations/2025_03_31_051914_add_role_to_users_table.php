@@ -12,7 +12,8 @@ return new class extends Migration
     public function up()
 {
     Schema::table('users', function (Blueprint $table) {
-        $table->string('role')->default('cliente'); // Establecemos un valor por defecto
+        $table->string('role')->default('cliente');
+        $table->string('subrol')->default('comprador');
     });
 }
 
@@ -20,6 +21,7 @@ public function down()
 {
     Schema::table('users', function (Blueprint $table) {
         $table->dropColumn('role');
+        $table->dropColumn('subrol');
     });
 }
 

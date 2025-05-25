@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -12,8 +13,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::all();  // Obtiene todos los productos
-        return view('productos.index', compact('productos'));  // Pasa los productos a la vista
+        $productos = Producto::with('categorias')->get();
+        return view('productos.index', compact('productos'));
     }
 
     /**
@@ -31,11 +32,24 @@ class ProductoController extends Controller
         'descripcion' => 'nullable|string',
         'precio' => 'required|numeric',
         'stock' => 'required|integer',
+        'imagenes.*' => 'image|max:2048',
     ]);
+    $imagenes = [];
 
-    // Crear el producto con los datos validados
-    Producto::create($validated);
+    if ($request->hasFile('imagenes')){
+        foreach ($request->file('imagenes') as $imagen){
+            $imagenes[] = $imagen->store('productos', 'public');
+        }
+    }
 
+    Producto::create([
+        'nombre' => $validated['nombre'],
+        'descripcion' => $validated['descripcion'] ?? null,
+        'precio' => $validated['precio'],
+        'stock' => $validated['stock'],
+        'user_id' => auth()->id(),
+        'imagenes' => $imagenes,
+    ]);
     return redirect()->route('productos.index')->with('success', 'Producto registrado correctamente');
 }
 
@@ -51,8 +65,9 @@ class ProductoController extends Controller
     // Mostrar el formulario para editar un producto
     public function edit($id)
     {
-        $producto = Producto::find($id);
-        return view('productos.edit', compact('producto'));
+        $producto = Producto::with('categorias')->findOrFail($id);
+        $categorias = Categoria::all();
+        return view('productos.edit', compact('producto', 'categorias'));
     }
 
     // Actualizar un producto específico
@@ -63,15 +78,44 @@ class ProductoController extends Controller
             'descripcion' => 'nullable|string',
             'precio' => 'required|numeric',
             'stock' => 'required|integer',
+            'imagenes.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'imagenes_a_borrar' => 'array',
+            'imagenes_a_borrar.*' => 'string',
+            'categorias' => 'nullable|array',
+            'categorias.*' => 'exists:categorias,id',
         ]);
 
-        $producto = Producto::find($id);
+        $producto = Producto::findOrFail($id);
         $producto->update([
             'nombre' => $validated['nombre'],
             'descripcion' => $validated['descripcion'],
             'precio' => $validated['precio'],
             'stock' => $validated['stock'],
         ]);
+
+        $imagenesExistentes = $producto->imagenes ?? [];
+        if ($request->has('imagenes_a_borrar')){
+            foreach ($request->imagenes_a_borrar as $imgABorrar){
+                if (in_array($imgABorrar, $imagenesExistentes)){
+                    \Storage::disk('public')->delete($imgABorrar);
+                    $imagenesExistentes = array_filter($imagenesExistentes, fn($img) => $img !== $imgABorrar);
+                }
+            }
+        }
+
+        if ($request->hasFile('imagenes')){
+            foreach ($request->file('imagenes') as $imagen){
+                $ruta = $imagen->store('appproductos', 'public');
+                $imagenesExistentes[] = $ruta;
+            }
+        }
+
+        $producto->imagenes = array_values($imagenesExistentes);
+        $producto->save();
+
+        if ($request->has('categorias')){
+            $producto->categorias()->sync($request->categorias);
+        }
 
         return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
     }

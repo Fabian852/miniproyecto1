@@ -38,14 +38,20 @@
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+            <div class="mt-4">
+                <x-input-label for="subrol" :value="__('¿Qué deseas hacer en la plataforma?')" />
+                <select id="subrol" name="subrol" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="comprador">Comprar productos</option>
+                    <option value="vendedor">Vender productos</option>
+                </select>
+                <x-input-error :messages="$errors->get('subrol')" class="mt-2" />
+            </div>
+            <div class="flex items-center justify-end mt-4">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+                {{ __('Ya tienes cuenta?') }}
             </a>
-
             <x-primary-button class="ms-4">
-                {{ __('Register') }}
+                {{ __('Registrarse') }}
             </x-primary-button>
         </div>
     </form>

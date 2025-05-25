@@ -1,15 +1,13 @@
 <x-app-layout>
     <div class="container mt-5">
-
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="text-primary">Lista de Productos</h2>
-            @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
+            @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado' || auth()->user()->subrol === 'vendedor')
                 <a href="{{ route('productos.create') }}" class="btn btn-success">
                     <i class="fas fa-plus"></i> Crear Producto
                 </a>
             @endif
         </div>
-        
 
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -24,7 +22,7 @@
             </div>
         @else
             <div class="table-responsive">
-                <table class="table table-hover table-bordered shadow-sm">
+                <table class="table table-hover table-bordered shadow-sm align-middle">
                     <thead class="table-dark">
                         <tr>
                             <th>ID</th>
@@ -32,11 +30,16 @@
                             <th>Descripción</th>
                             <th>Precio</th>
                             <th>Stock</th>
+                            <th>Imágenes</th>
+                            <th>Categorías</th>
+                            @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
+                                <th>Vendedor</th>
+                            @endif
                             @if(auth()->user()->role === 'cliente')
-                            <th class="text-center">Agregar al carrito</th>
+                                <th class="text-center">Agregar al carrito</th>
                             @endif
                             @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
-                            <th class="text-center">Acciones</th>
+                                <th class="text-center">Acciones</th>
                             @endif
                         </tr>
                     </thead>
@@ -46,8 +49,27 @@
                                 <td>{{ $producto->id }}</td>
                                 <td>{{ $producto->nombre }}</td>
                                 <td>{{ $producto->descripcion }}</td>
-                                <td>{{ $producto->precio }}</td>
+                                <td>{{ number_format($producto->precio, 2) }}</td>
                                 <td>{{ $producto->stock }}</td>
+                                <td>
+                                    @if(is_array($producto->imagenes) && count($producto->imagenes) > 0)
+                                        @foreach($producto->imagenes as $img)
+                                            <img src="{{ asset('storage/' . $img) }}" alt="Imagen del producto" width="60" height="60" class="me-1 mb-1 rounded" style="object-fit: cover;">
+                                        @endforeach
+                                    @else
+                                        <span class="text-muted">Sin imagen</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @forelse ($producto->categorias as $categoria)
+                                        <span class="badge bg-primary">{{ $categoria->nombre }}</span>
+                                    @empty
+                                        <span class="text-muted">Sin categoría</span>
+                                    @endforelse
+                                </td>
+                                @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
+                                <td>{{ $producto->vendedor->name ?? 'Desconocido' }}</td>
+                                @endif
                                 @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
                                 <td class="text-center">
                                     <a href="{{ route('productos.edit', $producto->id) }}" class="btn btn-warning btn-sm">
