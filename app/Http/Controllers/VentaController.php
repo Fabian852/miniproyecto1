@@ -42,7 +42,7 @@ class VentaController extends Controller
         }
 
         // Guardar el ticket en disco privado
-        $pathTicket = $request->file('ticket')->store('tickets', 'privado');
+        $pathTicket = $request->file('ticket')->store('tickets', 'private');
 
         // Calcular el total
         $total = 0;
@@ -142,15 +142,15 @@ class VentaController extends Controller
         $this->authorize('view', $venta);
 
         // Verificar si el ticket existe
-        if (!$venta->ticket || !\Storage::disk('privado')->exists($venta->ticket)) {
+        if (!$venta->ticket || !Storage::disk('private')->exists($venta->ticket)) {
             abort(404, 'Ticket no encontrado.');
         }
 
         // Obtener el contenido del archivo
-        $file = \Storage::disk('privado')->get($venta->ticket);
+        $file = !Storage::disk('private')->get($venta->ticket);
 
         // Obtener el tipo MIME del archivo
-        $mime = \Storage::disk('privado')->mimeType($venta->ticket);
+        $mime = !Storage::disk('private')->mimeType($venta->ticket);
 
         // Devolver la imagen para que el navegador la muestre
         return response($file, 200)->header('Content-Type', $mime);

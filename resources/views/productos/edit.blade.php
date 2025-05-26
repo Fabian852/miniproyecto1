@@ -1,5 +1,5 @@
 <x-app-layout>
-    @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
+    @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado' || auth()->user()->subrol === 'vendedor')
         <div class="flex justify-center items-center min-h-screen bg-gray-50 px-6 sm:px-12 lg:px-24">
             <div class="w-full max-w-2xl bg-white p-4 rounded-lg shadow-lg">
                 <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Editar Producto</h1>
@@ -80,7 +80,7 @@
                     <!-- Botón -->
                     <div class="text-right">
                         <button type="submit"
-                            class="bg-blue-600 text-white px-6 py-2 rounded-md shadow hover:bg-blue-700 transition">
+                            class="bg-blue-600 text-black px-6 py-2 rounded-md shadow hover:bg-blue-700 transition">
                             Actualizar
                         </button>
                     </div>

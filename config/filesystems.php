@@ -59,9 +59,9 @@ return [
             'throw' => false,
             'report' => false,
         ],
-        'privado' => [
+        'private' => [
         'driver' => 'local',
-        'root' => storage_path('app/privado'),
+        'root' => storage_path('app/private'),
         'visibility' => 'private',
         ],
 

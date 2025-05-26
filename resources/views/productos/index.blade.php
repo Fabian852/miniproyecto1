@@ -35,11 +35,11 @@
                             @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
                                 <th class="px-6 py-3 text-sm font-semibold tracking-wider">Vendedor</th>
                             @endif
-                            @if(auth()->user()->role === 'cliente')
-                                <th class="px-6 py-3 text-sm font-semibold tracking-wider">Agregar al carrito</th>
-                            @endif
                             @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado' || auth()->user()->subrol === 'vendedor')
                                 <th class="px-6 py-3 text-sm font-semibold tracking-wider">Acciones</th>
+                            @endif
+                            @if(auth()->user()->role === 'cliente' || auth()->user()->subrol === 'comprador')
+                                <th class="px-6 py-3 text-sm font-semibold tracking-wider">Agregar al carrito</th>
                             @endif
                         </tr>
                     </thead>

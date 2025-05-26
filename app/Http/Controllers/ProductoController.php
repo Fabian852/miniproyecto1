@@ -105,7 +105,7 @@ class ProductoController extends Controller
 
         if ($request->hasFile('imagenes')){
             foreach ($request->file('imagenes') as $imagen){
-                $ruta = $imagen->store('appproductos', 'public');
+                $ruta = $imagen->store('productos', 'public');
                 $imagenesExistentes[] = $ruta;
             }
         }
