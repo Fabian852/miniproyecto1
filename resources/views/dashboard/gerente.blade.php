@@ -25,6 +25,11 @@
                     Gestión de Categorías
                 </a>
 
+                <a href="{{ route('ventas.index') }}"
+                    class="block w-full text-center px-6 py-3 bg-indigo-600 text-black font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300">
+                    Gestión de Ventas
+                </a>
+
                 <a href="{{ route('administrador.index') }}"
                     class="block w-full text-center px-6 py-3 bg-yellow-500 text-panel font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition duration-300">
                     Panel Administrativo
