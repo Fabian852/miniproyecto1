@@ -1,9 +1,9 @@
 <x-app-layout>
     @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
         <div class="container mx-auto mt-10 px-4 max-w-6xl">
-            <div class="flex justify-start items-center mb-8">
+            <div class="flex justify-between max-w-5xl mx-auto mt-10 px-4 py-3 sm:px-6 lg:px-8">
                 <h2 class="text-3xl font-bold text-indigo-700">📂 Lista de Categorías</h2>
-                <a href="{{ route('categorias.create') }}" class="inline-flex items-center px-5 py-2 bg-green-600 hover:bg-green-700 text-black font-semibold rounded-lg shadow">
+                <a href="{{ route('categorias.create') }}" class="inline-flex items-center px-6 py-2 bg-green-600 hover:bg-green-700 text-black font-semibold rounded-lg shadow">
                     <i class="fas fa-plus-circle mr-2"></i> Crear Categoría
                 </a>
             </div>
@@ -22,9 +22,9 @@
                     <i class="fas fa-info-circle mr-2"></i> No hay categorías registradas.
                 </div>
             @else
-                <div class="overflow-x-auto rounded-xl shadow-lg border border-gray-200">
-                    <table class="min-w-full divide-y divide-gray-200 text-gray-700">
-                        <thead class="bg-indigo-600 text-black">
+                <div class="rounded-xl shadow-lg border border-gray-200">
+                    <table class="w-full divide-y divide-gray-200 text-gray-700">
+                        <thead class="bg-gray-800 text-white">
                             <tr>
                                 <th class="px-6 py-3 text-left text-sm font-semibold">ID</th>
                                 <th class="px-6 py-3 text-left text-sm font-semibold">Nombre</th>
@@ -39,7 +39,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $categoria->nombre }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $categoria->descripcion }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-center text-sm space-x-2">
-                                        <a href="{{ route('categorias.edit', $categoria->id) }}" class="inline-flex items-center px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-white rounded-lg shadow text-sm font-semibold">
+                                        <a href="{{ route('categorias.edit', $categoria->id) }}" class="inline-flex items-center px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-black rounded-lg shadow text-sm font-semibold">
                                             <i class="fas fa-edit mr-1"></i> Editar
                                         </a>
                                         <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" class="inline">

@@ -32,7 +32,7 @@
                     <i class="fas fa-boxes text-indigo-600"></i>
                     Productos por Categoría
                 </h4>
-                <table class="min-w-full text-sm text-left border border-gray-200 rounded overflow-hidden">
+                <table class="min-w-full text-sm text-left border  rounded overflow-hidden">
                     <thead class="bg-gray-100 text-gray-700">
                         <tr>
                             <th class="p-2">Categoría</th>

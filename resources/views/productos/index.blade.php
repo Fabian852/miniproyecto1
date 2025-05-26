@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="text-primary">Lista de Productos</h2>
+        <div class=" flex justify-between max-w-5xl mx-auto mt-10 px-4 py-3 sm:px-6 lg:px-8">
+            <h2 class=" items-center px-4">Lista de Productos</h2>
             @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado' || auth()->user()->subrol === 'vendedor')
-                <a href="{{ route('productos.create') }}" class="btn btn-success">
+                <a href="{{ route('productos.create') }}" class="bg-green-600 text-black px-4 py-2 rounded-md shadow hover:bg-green-700 transition duration-300">
                     <i class="fas fa-plus"></i> Crear Producto
                 </a>
             @endif
@@ -21,37 +21,37 @@
                 <i class="fas fa-info-circle"></i> No hay productos registrados.
             </div>
         @else
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered shadow-sm align-middle">
-                    <thead class="table-dark">
+            <div class="w-full px-4 bg-white shadow rounded-lg overflow-x-auto">
+                <table class="w-full table-auto divide-y divide-gray-200 text-sm">
+                    <thead class="bg-gray-800 text-white">
                         <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Precio</th>
-                            <th>Stock</th>
-                            <th>Imágenes</th>
-                            <th>Categorías</th>
+                            <th class="px-6 py-3 text-sm font-semibold tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-sm font-semibold tracking-wider">Nombre</th>
+                            <th class="px-6 py-3 text-sm font-semibold tracking-wider">Descripción</th>
+                            <th class="px-6 py-3 text-sm font-semibold tracking-wider">Precio</th>
+                            <th class="px-6 py-3 text-sm font-semibold tracking-wider">Stock</th>
+                            <th class="px-6 py-3 text-sm font-semibold tracking-wider">Imágenes</th>
+                            <th class="px-6 py-3 text-sm font-semibold tracking-wider">Categorías</th>
                             @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
-                                <th>Vendedor</th>
+                                <th class="px-6 py-3 text-sm font-semibold tracking-wider">Vendedor</th>
                             @endif
                             @if(auth()->user()->role === 'cliente')
-                                <th class="text-center">Agregar al carrito</th>
+                                <th class="px-6 py-3 text-sm font-semibold tracking-wider">Agregar al carrito</th>
                             @endif
-                            @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
-                                <th class="text-center">Acciones</th>
+                            @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado' || auth()->user()->subrol === 'vendedor')
+                                <th class="px-6 py-3 text-sm font-semibold tracking-wider">Acciones</th>
                             @endif
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($productos as $producto)
                             <tr>
-                                <td>{{ $producto->id }}</td>
-                                <td>{{ $producto->nombre }}</td>
-                                <td>{{ $producto->descripcion }}</td>
-                                <td>{{ number_format($producto->precio, 2) }}</td>
-                                <td>{{ $producto->stock }}</td>
-                                <td>
+                                <td class="px-4 py-2">{{ $producto->id }}</td>
+                                <td class="px-4 py-2">{{ $producto->nombre }}</td>
+                                <td class="px-4 py-2">{{ $producto->descripcion }}</td>
+                                <td class="px-4 py-2">{{ number_format($producto->precio, 2) }}</td>
+                                <td class="px-4 py-2">{{ $producto->stock }}</td>
+                                <td class="px-4 py-2">
                                     @if(is_array($producto->imagenes) && count($producto->imagenes) > 0)
                                         @foreach($producto->imagenes as $img)
                                             <img src="{{ asset('storage/' . $img) }}" alt="Imagen del producto" width="60" height="60" class="me-1 mb-1 rounded" style="object-fit: cover;">
@@ -60,25 +60,25 @@
                                         <span class="text-muted">Sin imagen</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="px-4 py-2">
                                     @forelse ($producto->categorias as $categoria)
                                         <span class="badge bg-primary">{{ $categoria->nombre }}</span>
                                     @empty
                                         <span class="text-muted">Sin categoría</span>
                                     @endforelse
-                                </td>
+                                </td class="px-4 py-2">
                                 @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
-                                <td>{{ $producto->vendedor->name ?? 'Desconocido' }}</td>
+                                <td class="px-4 py-2">{{ $producto->vendedor->name ?? 'Desconocido' }}</td>
                                 @endif
-                                @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado')
-                                <td class="text-center">
-                                    <a href="{{ route('productos.edit', $producto->id) }}" class="btn btn-warning btn-sm">
+                                @if(auth()->user()->role === 'gerente' || auth()->user()->role === 'empleado' || auth()->user()->subrol === 'vendedor')
+                                <td class="px-4 py-2">
+                                    <a href="{{ route('productos.edit', $producto->id) }}" class="inline-flex items-center px-2 py-1 btn-sm font-semibold">
                                         <i class="fas fa-edit"></i> Editar
                                     </a>
                                     <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro?')">
+                                        <button type="submit" class="inline-flex items-center px-2 py-1 bg-red-600 hover:bg-red-700 text-white font-semibold" onclick="return confirm('¿Estás seguro de eliminar el producto?')">
                                             <i class="fas fa-trash-alt"></i> Eliminar
                                         </button>
                                     </form>
